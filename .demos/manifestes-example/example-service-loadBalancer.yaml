@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-service
+  # Si tu es dans le même namespace: example-service
+  # Si tu n'es pas dans le même namespace: example-service.nom-namespace
+  # Si tu n'es pas dans le même cluster: example-service.nom-namespace.svc.endpoint-cluster
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx
+    tier: frontend
+  ports:
+    # Service => IP du Cluster:port aléatoire => IP du noeud:80 => IP du pod:80 => Conteneur
+    - port: 80
+      targetPort: 80

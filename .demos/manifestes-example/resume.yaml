@@ -1,0 +1,28 @@
+string: valeur
+integer: 123456
+boolean: true
+
+empty-array: []
+
+array: [valeurA, 1234, true]
+
+array-listed:
+  - valeurA
+  - 1234
+  - true
+
+empty-object: {}
+
+object: { cle: valeur, cleB: valeur }
+
+object-other-syntax:
+  cle: valeur
+  cleB: valeur
+
+objects-array:
+  - cle: valeur
+    cleB: valeur
+    cleC: valeur
+  - cle: valeur
+    cleB: valeur
+    cleC: valeur

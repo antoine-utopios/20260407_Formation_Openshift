@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: example-configmap
+data:
+  MYSQL_DATABASE: testDB
+  MYSQL_HOST_URL: mysql-service
+  MYSQL_USER: user
+  TOTO: blabla
+  TUTU: blabla

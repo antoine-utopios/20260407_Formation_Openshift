@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: example-pv
+spec:
+  capacity:
+    storage: "1Gi"
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteMany # ReadOnlyOncePod | ReadOnlyOnce | ReadWriteOnce | ReadWriteMany
+  persistentVolumeReclaimPolicy: Recycle # Delete | Remain | Recycle
+  storageClassName: slow
