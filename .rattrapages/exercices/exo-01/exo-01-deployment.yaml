@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exo-01-deployment
+  labels:
+    app.kubernetes.io/name: exo-01-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: exo-01-pod
+  template:
+    metadata:
+      name: exo-01-pod
+      labels:
+        app.kubernetes.io/name: exo-01-pod
+    spec:
+      serviceAccountName: exo-01-sa
+      containers:
+        - name: exo-01-container
+          image: quchaonet/2048
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 8080

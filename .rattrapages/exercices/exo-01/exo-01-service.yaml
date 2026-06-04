@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: exo-01-service
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: exo-01-pod
+  ports:
+    - port: 8080
+      targetPort: 8080
