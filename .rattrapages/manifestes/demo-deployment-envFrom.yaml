@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-deployment
+  labels:
+    app.kubernetes.io/name: demo
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: demo
+  template:
+    metadata:
+      name: demo-pod
+      labels:
+        app.kubernetes.io/name: demo
+    spec:
+      containers:
+        - name: demo-container
+          image: mysql:latest
+          ports:
+            - containerPort: 80
+          envFrom:
+            # - configMapRef:
+            #     name: demo-configmap
+            - secretRef:
+                name: demo-secret
