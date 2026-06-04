@@ -20,6 +20,7 @@ spec:
       labels:
         app.kubernetes.io/name: demo
     spec:
+      serviceAccountName: demo-nginx-sa
       containers:
         - name: demo-container
           image: nginx:latest
@@ -32,3 +33,25 @@ spec:
               cpu: "500m"
           ports:
             - containerPort: 80
+
+## On se connecte en tant qu'administrateur
+
+# crc console --credentials
+# oc login ...
+
+## Création d'un compte de service pour le futur déploiement
+# oc create serviceaccount demo-nginx-sa -n demo-recap
+
+## On lui alloue la bonne politique vis à vis du SCC
+# oc adm policy add-scc-to-user anyuid -z demo-nginx-sa -n demo-recap
+
+## On se reconnecte en tant qu'utilisateur classique
+# oc login ...
+
+## On applique les fichier du déploiement et du service
+# oc apply -f demo-deployment.yaml
+# oc apply -f demo-service-loadbalancer.yaml
+
+## On fait une redirection des ports de sorte à atteindre le service
+# oc port-forward svc/demo-service 8080:8080
+# oc port-forward svc/demo-service 8080
