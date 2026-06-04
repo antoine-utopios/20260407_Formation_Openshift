@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: exo-02-deploy
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: exo-02-app
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: exo-02-app
+    spec:
+      serviceAccountName: exo-02-sa
+      containers:
+        - name: mysql
+          image: mysql:9.0
+          ports:
+            - containerPort: 3306
+              name: mysql
+              protocol: TCP
+          envFrom:
+            - secretRef:
+                name: exo-02-secret
+            - configMapRef:
+                name: exo-02-configmap
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - "mysqladmin ping -u root -p${MYSQL_ROOT_PASSWORD}"
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - "mysql -u root -p${MYSQL_ROOT_PASSWORD} -e 'SELECT 1'"
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: exo-02-pvc

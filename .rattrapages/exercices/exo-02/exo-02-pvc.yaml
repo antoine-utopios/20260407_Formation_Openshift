@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: exo-02-pvc
+spec:
+  resources:
+    requests:
+      storage: "5Gi"
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
