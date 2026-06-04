@@ -1,4 +1,4 @@
-# Exercice OpenShift #1 - Création d'utilisateurs et affectation de rôles
+# Exercice OpenShift #1 - Déploiement d'un applicatif de type site web statique
 
 ## Objectifs
 
